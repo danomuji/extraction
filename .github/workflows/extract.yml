@@ -23,10 +23,115 @@ jobs:
     - name: Run ChemFYI
       id: run_sigma_aldrich
       run: | 
-        docker run -v /tmp:/tmp -v $PWD/output:/output ghcr.io/ryang20718/chemfyi_linux_amd64 main.py --url-start 1 --url-end 2 --batch-size 1
+        docker run -v /tmp:/tmp -v $PWD/output:/output ghcr.io/ryang20718/chemfyi_linux_amd64 main.py --url-start 1 --url-end 2000 --batch-size 10
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: extracted_sigma_aldrich
+        path: output/
+
+  run-chemfyi2:
+    timeout-minutes: 360
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.DOCKER_READ_ONLY }}
+
+    - name: Run ChemFYI
+      id: run_sigma_aldrich
+      run: | 
+        docker run -v /tmp:/tmp -v $PWD/output:/output ghcr.io/ryang20718/chemfyi_linux_amd64 main.py --url-start 2001 --url-end 4000 --batch-size 10
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: extracted_sigma_aldrich2
+        path: output/
+
+
+  run-chemfyi3:
+    timeout-minutes: 360
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.DOCKER_READ_ONLY }}
+
+    - name: Run ChemFYI
+      id: run_sigma_aldrich
+      run: | 
+        docker run -v /tmp:/tmp -v $PWD/output:/output ghcr.io/ryang20718/chemfyi_linux_amd64 main.py --url-start 4001 --url-end 6000 --batch-size 10
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: extracted_sigma_aldrich3
+        path: output/
+
+  run-chemfyi4:
+    timeout-minutes: 360
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.DOCKER_READ_ONLY }}
+
+    - name: Run ChemFYI
+      id: run_sigma_aldrich
+      run: | 
+        docker run -v /tmp:/tmp -v $PWD/output:/output ghcr.io/ryang20718/chemfyi_linux_amd64 main.py --url-start 6001 --url-end 8000 --batch-size 10
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: extracted_sigma_aldrich4
+        path: output/
+
+  run-chemfyi5:
+    timeout-minutes: 360
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.DOCKER_READ_ONLY }}
+
+    - name: Run ChemFYI
+      id: run_sigma_aldrich
+      run: | 
+        docker run -v /tmp:/tmp -v $PWD/output:/output ghcr.io/ryang20718/chemfyi_linux_amd64 main.py --url-start 8001 --url-end 10000 --batch-size 10
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: extracted_sigma_aldrich5
         path: output/
