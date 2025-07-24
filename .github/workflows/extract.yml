@@ -23,7 +23,7 @@ jobs:
     - name: Run ChemFYI
       id: run_sigma_aldrich
       run: | 
-        docker run -v /tmp:/tmp ghcr.io/ryang20718/chemfyi_linux_amd64 main.py --url-start 1 --url-end 2 --batch-size 1
+        docker run -v /tmp:/tmp -v $PWD:crawled_data_sigma_aldrich:crawled_data_sigma_aldrich ghcr.io/ryang20718/chemfyi_linux_amd64 main.py --url-start 1 --url-end 2 --batch-size 1
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
