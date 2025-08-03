@@ -1,0 +1,55 @@
+# .github/workflows/reusable-chemfyi-run.yml
+
+name: Reusable ChemFYI Run
+
+on:
+  # This makes the workflow reusable
+  workflow_call:
+    # Define the inputs this reusable workflow accepts
+    inputs:
+      url-start:
+        description: 'The starting URL number'
+        required: true
+        type: number
+      url-end:
+        description: 'The ending URL number'
+        required: true
+        type: number
+      artifact-name:
+        description: 'The name for the output artifact'
+        required: true
+        type: string
+    # Define the secrets this reusable workflow needs from the caller
+    secrets:
+      DOCKER_READ_ONLY:
+        description: 'A read-only PAT for GHCR'
+        required: true
+
+jobs:
+  run-chemfyi:
+    timeout-minutes: 360
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        # Use the secret passed from the calling workflow
+        password: ${{ secrets.DOCKER_READ_ONLY }}
+
+    - name: Run ChemFYI
+      run: |
+        # Use the inputs to configure the Docker command
+        docker run -v /tmp:/tmp -v $PWD/output:/output ghcr.io/ryang20718/chemfyi_linux_amd64 main.py --url-start ${{ inputs.url-start }} --url-end ${{ inputs.url-end }} --batch-size 10
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        # Use the input for the artifact name
+        name: ${{ inputs.artifact-name }}
+        path: output/
