@@ -11,5 +11,8 @@ jobs:
       - name: Setup ollama
         uses: ai-action/setup-ollama@v1
 
+      - name: Pull Model
+        run: ollama pull qwen3:4b
+
       - name: Print response
         run: ollama run qwen3:4b 'What is a large language model?'
